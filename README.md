@@ -55,42 +55,44 @@ sudo apt install ros-jazzy-turtlesim
 ⚙️ Build Commands
 [cite: 13]
 Navigate to your workspace root directory:
-
 Bash
 cd ~/altair_phase3_ws/whatever_rover
-Build the package using colcon:
 
+
+Build the package using colcon:
 Bash
 colcon build --packages-select rover_telemetry
-Source your workspace environment:
 
+
+Source your workspace environment:
 Bash
 source /opt/ros/jazzy/setup.bash
 source install/setup.bash
-🚀 Run Commands
-[cite: 13]
+
+
+Run Commands
 1. Launch Autonomous Waypoint Navigation
 To start both the Turtlesim simulator and the waypoint navigation node together with a single command:
-
 Bash
 ros2 launch rover_telemetry waypoint_launch.py
 Mission Route: The rover navigates autonomously from start to Bottle (8.0, 5.5), then Mallet (8.0, 8.0), and finally Base (5.5, 5.5), finishing with a DONE announcement.
+
 
 2. Testing Safety Interruption & Resume Control
 While the rover is navigating between waypoints, test the blockage and service resume logic across separate terminals:
 
 Trigger a Route Blockage (Pause):
-
 Bash
 ros2 topic pub /field_blocked std_msgs/msg/Bool "{data: true}" -1
 (The rover halts immediately and holds zero velocity).
 
-Try to Resume While Blocked (Should Reject):
 
+Try to Resume While Blocked (Should Reject):
 Bash
 ros2 service call /resume_mission std_srvs/srv/Trigger
-Clear the Blockage Report:
 
+
+Clear the Blockage Report:
 Bash
 ros2 topic pub /field_blocked std_msgs/msg/Bool "{data: false}" -1
 (Notice the rover remains stationary, verifying no automatic resumption occurs).
